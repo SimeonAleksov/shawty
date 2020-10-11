@@ -11,21 +11,15 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
-    # Django Admin, use {% url 'admin:index' %}
+    # path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    path('', TemplateView.as_view(template_name="index.html"), name='home'),
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
     path("users/", include("shawty.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('', include('shawty.shawtier.urls'))
-    # Your stuff: custom urls includes go here
+    path('shw/', include('shawty.shawtier.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
-    # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
 
 # API URLS
@@ -37,8 +31,6 @@ urlpatterns += [
 ]
 
 if settings.DEBUG:
-    # This allows the error pages to be debugged during development, just visit
-    # these url in browser to see how these error pages look like.
     urlpatterns += [
         path(
             "400/",
