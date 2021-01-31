@@ -17,7 +17,7 @@ urlpatterns = [
     path("users/", include("shawty.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    path('shw/', include('shawty.shawtier.urls'))
+    path('', include('shawty.shawtier.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()

@@ -22,7 +22,7 @@ class CreateURL(graphene.Mutation):
         full_url = graphene.String()
 
     @staticmethod
-    def mutate(info, full_url):
+    def mutate(self, info, full_url):
         url = URL(full_url=full_url)
         url.save()
 

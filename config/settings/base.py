@@ -8,7 +8,6 @@ import environ
 
 # ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 ROOT_DIR = (environ.Path(__file__) - 3)
-# shawty/
 APPS_DIR = ROOT_DIR.path("shawty")
 NUXT_APP_DIR = ROOT_DIR.path('client')
 env = environ.Env()
@@ -107,15 +106,15 @@ CORS_ORIGIN_WHITELIST = (
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    str(APPS_DIR.path("static")),
-    # os.path.join(str(NUXT_APP_DIR.path("dist")), ''),
+    # str(APPS_DIR.path("templates/_nuxt")),
+    os.path.join(str(NUXT_APP_DIR.path("dist")), '_nuxt/'),
 ]
 
 
-# STATICFILES_FINDERS = [
-#     "django.contrib.staticfiles.finders.FileSystemFinder",
-#     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-# ]
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 # MEDIA
 # ------------------------------------------------------------------------------
@@ -131,7 +130,7 @@ TEMPLATES = [
     {"BACKEND": "django.template.backends.django.DjangoTemplates",
      "DIRS": [
          str(APPS_DIR.path("templates")),
-         str(NUXT_APP_DIR.path("dist")),
+         # str(NUXT_APP_DIR.path("dist")),
      ],
      "OPTIONS": {
          "loaders": [
@@ -154,51 +153,28 @@ TEMPLATES = [
      }
 ]
 
-# https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
-# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-# FIXTURES
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
+
 FIXTURE_DIRS = (str(APPS_DIR.path("fixtures")),)
 
-# SECURITY
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
+
 SESSION_COOKIE_HTTPONLY = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 CSRF_COOKIE_HTTPONLY = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
 SECURE_BROWSER_XSS_FILTER = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "DENY"
 
-# EMAIL
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
 )
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 
-# ADMIN
-# ------------------------------------------------------------------------------
-# Django Admin URL.
 ADMIN_URL = "admin/"
-# https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""Simeon Aleksov""", "aleksov_s@outlook.com")]
-# https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
-# LOGGING
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# See https://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
